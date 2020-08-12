@@ -72,9 +72,9 @@ def index():
     ## Buatlah bar plot dimana axis x adalah nama Category dan axis y adalah jumlah aplikasi pada setiap kategori, kemudian urutkan dari jumlah terbanyak
     cat_order = df2.groupby('Category').agg({
     'App' : 'count'
-        }).rename({'App':'Total'}, axis=1).sort_values(by='Total',ascending=False).head()
-    X = 'Category'
-    Y = 'App'
+        }).rename({'App':'Total'}, axis=1).sort_values('Total',ascending=False).head()
+    X = cat_order.index
+    Y = cat_order.Total
     my_colors = 'rgbkymc'
     # bagian ini digunakan untuk membuat kanvas/figure
     fig = plt.figure(figsize=(8,3),dpi=300)
@@ -132,20 +132,20 @@ def index():
     result3 = str(figdata_png)[2:-1]
 
     ## Buatlah sebuah plot yang menampilkan insight di dalam data 
-    cat_order = df2.groupby('Content Rating').agg({
+    cat_order2 = df2.groupby('Content Rating').agg({
    'Installs' : 'count',
-        }).rename({'Installs':'Total'}, axis=1).sort_values(by='Total',ascending=False).head()
-    X = 'Installs'
-    Y = 'Content Rating'
+        }).rename({'Installs':'Total'}, axis=1).sort_values('Total',ascending=False).head()
+    X = cat_order2.index
+    Y = cat_order2.Total
     my_colors = 'rgbkymc'
     # bagian ini digunakan untuk membuat kanvas/figure
     fig = plt.figure(figsize=(8,3),dpi=300)
     fig.add_subplot()
     # bagian ini digunakan untuk membuat bar plot
     # isi variabel x dan y yang telah di definisikan di atas
-    plt.barh(X,Y, color=my_colors)
+    plt.bar(X,Y, color=my_colors)
     # bagian ini digunakan untuk menyimpan plot dalam format image.png
-    plt.savefig('cat_order.png',bbox_inches="tight") 
+    plt.savefig('cat_order2.png',bbox_inches="tight") 
 
     # bagian ini digunakan untuk mengconvert matplotlib png ke base64 agar dapat ditampilkan ke template html
     figfile = BytesIO()
